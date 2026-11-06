@@ -1,0 +1,8 @@
+{
+  "name": "Remix Snay3i DZ - صْنايعي الجزائر",
+  "description": "المنصة الجزائرية الأولى للعثور على أمهر الحرفيين والمهنيين في ولايتك وتصليح جميع الأعطال المنزلية بسرعة وموثوقية.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
