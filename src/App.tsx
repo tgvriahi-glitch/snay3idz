@@ -318,7 +318,7 @@ export default function App() {
         />
       )}
 
-      {/* Admin Panel Modal (Protected with PIN 061198) */}
+      {/* Admin Panel Modal (Protected with Admin PIN) */}
       <AdminPanelModal
         isOpen={isAdminModalOpen}
         onClose={() => setIsAdminModalOpen(false)}

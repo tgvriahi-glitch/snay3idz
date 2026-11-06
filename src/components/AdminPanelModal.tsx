@@ -18,7 +18,9 @@ import {
   AlertTriangle,
   Check,
   RefreshCw,
-  Download
+  Download,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 interface AdminPanelModalProps {
@@ -54,6 +56,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 }) => {
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState('');
+  const [showPin, setShowPin] = useState(false);
   const [activeTab, setActiveTab] = useState<'add' | 'list' | 'owner_settings' | 'backup'>('add');
   const [editingArtisanId, setEditingArtisanId] = useState<string | null>(null);
 
@@ -198,7 +201,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 فضاء الإدارة والتحكم (خاص بصاحب التطبيق)
               </h3>
               <p className="text-xs text-amber-400 font-semibold">
-                {isAuthenticated ? 'تم الدخول بالرمز السري 061198 بنجاح' : 'الخانة محمية برمز سري'}
+                {isAuthenticated ? 'تم تسجيل الدخول بنجاح' : 'الخانة محمية برمز سري'}
               </p>
             </div>
           </div>
@@ -237,19 +240,27 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
             </p>
 
             <form onSubmit={handleVerifyPin} className="space-y-4">
-              <div>
+              <div className="relative">
                 <input
-                  type="password"
-                  maxLength={10}
-                  placeholder="أدخل الرمز السري (مثال: 061198)"
+                  type={showPin ? 'text' : 'password'}
+                  maxLength={20}
+                  placeholder="أدخل الرمز السري"
                   value={pinInput}
                   onChange={(e) => {
                     setPinInput(e.target.value);
                     setPinError('');
                   }}
                   autoFocus
-                  className="w-full text-center tracking-widest text-xl font-bold bg-slate-50 border-2 border-slate-300 focus:border-amber-500 rounded-xl py-3 px-4 focus:outline-none"
+                  className="w-full text-center tracking-widest text-xl font-bold bg-slate-50 border-2 border-slate-300 focus:border-amber-500 rounded-xl py-3 px-12 focus:outline-none transition-colors"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPin(!showPin)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg focus:outline-none cursor-pointer transition-colors"
+                  title={showPin ? 'إخفاء الرمز' : 'إظهار الرمز'}
+                >
+                  {showPin ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
               </div>
 
               {pinError && (
@@ -259,20 +270,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 </div>
               )}
 
-              {/* Quick keypad shortcut buttons for convenience */}
-              <div className="pt-1">
-                <button
-                  type="button"
-                  onClick={() => setPinInput('061198')}
-                  className="text-[11px] font-bold text-slate-400 hover:text-amber-700 underline cursor-pointer"
-                >
-                  (تجربة الرمز المحدد في طلبك: 061198)
-                </button>
-              </div>
-
               <button
                 type="submit"
-                className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-sm rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-sm rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-2 mt-2"
               >
                 <Unlock className="w-4 h-4" />
                 <span>فتح لوحة الإدارة</span>
